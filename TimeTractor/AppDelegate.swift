@@ -28,10 +28,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSLog("Creating debug categories...")
         dbQueue = try AppDatabase.openDatabase(atPath: ":memory:")
         try! dbQueue.write { db in
-            var cat1 = Category(id: nil, name: "Cook")
-            var cat2 = Category(id: nil, name: "Sleep")
+            var cat1 = Project(name: "Cook")
+            var cat2 = Project(name: "Sleep")
+            var cat3 = Project(name: "CS 195")
+            var cat4 = Project(name: "CS 189")
+            var cat5 = Project(name: "EE 120")
+
             try cat1.insert(db)
             try cat2.insert(db)
+            try cat3.insert(db)
+            try cat4.insert(db)
+            try cat5.insert(db)
+            
         }
         #endif
     }

@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D8515E7924650E1B007ACD50 /* ProjectListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8515E7824650E1B007ACD50 /* ProjectListCell.swift */; };
+		D8515E7D246523CB007ACD50 /* GRDBCombine in Frameworks */ = {isa = PBXBuildFile; productRef = D8515E7C246523CB007ACD50 /* GRDBCombine */; };
 		D862D9112463AE050031E3AB /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D862D9102463AE050031E3AB /* GRDB */; };
 		D862D9132463AE740031E3AB /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9122463AE740031E3AB /* AppDatabase.swift */; };
-		D862D9152464EB100031E3AB /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9142464EB100031E3AB /* Category.swift */; };
+		D862D9152464EB100031E3AB /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9142464EB100031E3AB /* Project.swift */; };
 		D862D9182464F03D0031E3AB /* TimeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9172464F03D0031E3AB /* TimeRecord.swift */; };
 		D886E9C22458D4DB005F2571 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886E9C12458D4DB005F2571 /* AppDelegate.swift */; };
 		D886E9C42458D4DB005F2571 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886E9C32458D4DB005F2571 /* SceneDelegate.swift */; };
@@ -38,8 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D8515E7824650E1B007ACD50 /* ProjectListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListCell.swift; sourceTree = "<group>"; };
 		D862D9122463AE740031E3AB /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
-		D862D9142464EB100031E3AB /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		D862D9142464EB100031E3AB /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		D862D9172464F03D0031E3AB /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
 		D886E9BE2458D4DB005F2571 /* TimeTractor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTractor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D886E9C12458D4DB005F2571 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D862D9112463AE050031E3AB /* GRDB in Frameworks */,
+				D8515E7D246523CB007ACD50 /* GRDBCombine in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +89,7 @@
 		D862D9162464F0320031E3AB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D862D9142464EB100031E3AB /* Category.swift */,
+				D862D9142464EB100031E3AB /* Project.swift */,
 				D862D9172464F03D0031E3AB /* TimeRecord.swift */,
 			);
 			path = Model;
@@ -118,6 +122,7 @@
 				D886E9C12458D4DB005F2571 /* AppDelegate.swift */,
 				D886E9C32458D4DB005F2571 /* SceneDelegate.swift */,
 				D886E9C52458D4DB005F2571 /* ViewController.swift */,
+				D8515E7824650E1B007ACD50 /* ProjectListCell.swift */,
 				D886E9CA2458D4E0005F2571 /* Assets.xcassets */,
 				D886E9CC2458D4E0005F2571 /* LaunchScreen.storyboard */,
 				D886E9CF2458D4E0005F2571 /* Info.plist */,
@@ -162,6 +167,7 @@
 			name = TimeTractor;
 			packageProductDependencies = (
 				D862D9102463AE050031E3AB /* GRDB */,
+				D8515E7C246523CB007ACD50 /* GRDBCombine */,
 			);
 			productName = TimeTractor;
 			productReference = D886E9BE2458D4DB005F2571 /* TimeTractor.app */;
@@ -237,6 +243,7 @@
 			mainGroup = D886E9B52458D4DB005F2571;
 			packageReferences = (
 				D862D90F2463AE050031E3AB /* XCRemoteSwiftPackageReference "GRDB" */,
+				D8515E7B246523CB007ACD50 /* XCRemoteSwiftPackageReference "GRDBCombine" */,
 			);
 			productRefGroup = D886E9BF2458D4DB005F2571 /* Products */;
 			projectDirPath = "";
@@ -281,8 +288,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D886E9C62458D4DB005F2571 /* ViewController.swift in Sources */,
+				D8515E7924650E1B007ACD50 /* ProjectListCell.swift in Sources */,
 				D862D9182464F03D0031E3AB /* TimeRecord.swift in Sources */,
-				D862D9152464EB100031E3AB /* Category.swift in Sources */,
+				D862D9152464EB100031E3AB /* Project.swift in Sources */,
 				D886E9C22458D4DB005F2571 /* AppDelegate.swift in Sources */,
 				D862D9132463AE740031E3AB /* AppDatabase.swift in Sources */,
 				D886E9C42458D4DB005F2571 /* SceneDelegate.swift in Sources */,
@@ -608,6 +616,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D8515E7B246523CB007ACD50 /* XCRemoteSwiftPackageReference "GRDBCombine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDBCombine";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.1;
+			};
+		};
 		D862D90F2463AE050031E3AB /* XCRemoteSwiftPackageReference "GRDB" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift";
@@ -619,6 +635,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D8515E7C246523CB007ACD50 /* GRDBCombine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8515E7B246523CB007ACD50 /* XCRemoteSwiftPackageReference "GRDBCombine" */;
+			productName = GRDBCombine;
+		};
 		D862D9102463AE050031E3AB /* GRDB */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D862D90F2463AE050031E3AB /* XCRemoteSwiftPackageReference "GRDB" */;
