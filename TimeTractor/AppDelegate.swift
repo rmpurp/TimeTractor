@@ -7,17 +7,36 @@
 //
 
 import UIKit
+import GRDB
+
+var dbQueue: DatabaseQueue!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        try! setupDatabase(application)
         // Override point for customization after application launch.
         return true
     }
 
+    private func setupDatabase(_ application: UIApplication) throws {
+        let _ = try FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("db.sqlite")
+        
+        #if DEBUG
+        NSLog("Creating debug categories...")
+        dbQueue = try AppDatabase.openDatabase(atPath: ":memory:")
+        try! dbQueue.write { db in
+            var cat1 = Category(id: nil, name: "Cook")
+            var cat2 = Category(id: nil, name: "Sleep")
+            try cat1.insert(db)
+            try cat2.insert(db)
+        }
+        #endif
+    }
+    
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
