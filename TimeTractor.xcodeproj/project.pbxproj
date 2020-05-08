@@ -3,14 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D862D9112463AE050031E3AB /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D862D9102463AE050031E3AB /* GRDB */; };
+		D862D9132463AE740031E3AB /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9122463AE740031E3AB /* AppDatabase.swift */; };
+		D862D9152464EB100031E3AB /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9142464EB100031E3AB /* Category.swift */; };
+		D862D9182464F03D0031E3AB /* TimeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9172464F03D0031E3AB /* TimeRecord.swift */; };
 		D886E9C22458D4DB005F2571 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886E9C12458D4DB005F2571 /* AppDelegate.swift */; };
 		D886E9C42458D4DB005F2571 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886E9C32458D4DB005F2571 /* SceneDelegate.swift */; };
 		D886E9C62458D4DB005F2571 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886E9C52458D4DB005F2571 /* ViewController.swift */; };
-		D886E9C92458D4DB005F2571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D886E9C72458D4DB005F2571 /* Main.storyboard */; };
 		D886E9CB2458D4E0005F2571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D886E9CA2458D4E0005F2571 /* Assets.xcassets */; };
 		D886E9CE2458D4E0005F2571 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D886E9CC2458D4E0005F2571 /* LaunchScreen.storyboard */; };
 		D886E9D92458D4E0005F2571 /* TimeTractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886E9D82458D4E0005F2571 /* TimeTractorTests.swift */; };
@@ -35,11 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D862D9122463AE740031E3AB /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
+		D862D9142464EB100031E3AB /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		D862D9172464F03D0031E3AB /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
 		D886E9BE2458D4DB005F2571 /* TimeTractor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTractor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D886E9C12458D4DB005F2571 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D886E9C32458D4DB005F2571 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D886E9C52458D4DB005F2571 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D886E9C82458D4DB005F2571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D886E9CA2458D4E0005F2571 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D886E9CD2458D4E0005F2571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D886E9CF2458D4E0005F2571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D862D9112463AE050031E3AB /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +82,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D862D9162464F0320031E3AB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D862D9142464EB100031E3AB /* Category.swift */,
+				D862D9172464F03D0031E3AB /* TimeRecord.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		D886E9B52458D4DB005F2571 = {
 			isa = PBXGroup;
 			children = (
@@ -99,13 +114,14 @@
 		D886E9C02458D4DB005F2571 /* TimeTractor */ = {
 			isa = PBXGroup;
 			children = (
+				D862D9162464F0320031E3AB /* Model */,
 				D886E9C12458D4DB005F2571 /* AppDelegate.swift */,
 				D886E9C32458D4DB005F2571 /* SceneDelegate.swift */,
 				D886E9C52458D4DB005F2571 /* ViewController.swift */,
-				D886E9C72458D4DB005F2571 /* Main.storyboard */,
 				D886E9CA2458D4E0005F2571 /* Assets.xcassets */,
 				D886E9CC2458D4E0005F2571 /* LaunchScreen.storyboard */,
 				D886E9CF2458D4E0005F2571 /* Info.plist */,
+				D862D9122463AE740031E3AB /* AppDatabase.swift */,
 			);
 			path = TimeTractor;
 			sourceTree = "<group>";
@@ -144,6 +160,9 @@
 			dependencies = (
 			);
 			name = TimeTractor;
+			packageProductDependencies = (
+				D862D9102463AE050031E3AB /* GRDB */,
+			);
 			productName = TimeTractor;
 			productReference = D886E9BE2458D4DB005F2571 /* TimeTractor.app */;
 			productType = "com.apple.product-type.application";
@@ -216,6 +235,9 @@
 				Base,
 			);
 			mainGroup = D886E9B52458D4DB005F2571;
+			packageReferences = (
+				D862D90F2463AE050031E3AB /* XCRemoteSwiftPackageReference "GRDB" */,
+			);
 			productRefGroup = D886E9BF2458D4DB005F2571 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -234,7 +256,6 @@
 			files = (
 				D886E9CE2458D4E0005F2571 /* LaunchScreen.storyboard in Resources */,
 				D886E9CB2458D4E0005F2571 /* Assets.xcassets in Resources */,
-				D886E9C92458D4DB005F2571 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +281,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D886E9C62458D4DB005F2571 /* ViewController.swift in Sources */,
+				D862D9182464F03D0031E3AB /* TimeRecord.swift in Sources */,
+				D862D9152464EB100031E3AB /* Category.swift in Sources */,
 				D886E9C22458D4DB005F2571 /* AppDelegate.swift in Sources */,
+				D862D9132463AE740031E3AB /* AppDatabase.swift in Sources */,
 				D886E9C42458D4DB005F2571 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,14 +321,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D886E9C72458D4DB005F2571 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D886E9C82458D4DB005F2571 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D886E9CC2458D4E0005F2571 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -590,6 +606,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D862D90F2463AE050031E3AB /* XCRemoteSwiftPackageReference "GRDB" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.14.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D862D9102463AE050031E3AB /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D862D90F2463AE050031E3AB /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = GRDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D886E9B62458D4DB005F2571 /* Project object */;
 }
