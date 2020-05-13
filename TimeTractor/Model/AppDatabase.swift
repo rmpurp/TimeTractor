@@ -38,14 +38,23 @@ struct AppDatabase {
         // See https://github.com/groue/GRDB.swift/blob/master/README.md#unicode
         t.column("taskName", .text)
         t.column("startTime", .datetime).notNull()
-        t.column("endTime", .datetime)
-        t.column("projectId", .blob).references(
-          "project",
-          column: "id",
-          onDelete: .cascade,
-          onUpdate: .none,
-          deferred: false
-        ).notNull()
+        t.column("endTime", .datetime).notNull()
+        t.column("projectId", .blob).notNull()
+        t.foreignKey(["projectId"], references: "project", columns: ["id"], onDelete: .cascade, onUpdate: .none, deferred: false)
+      }
+    }
+    
+    migrator.registerMigration("createRunningTimer") { db in
+      try db.create(table: "runningTimer") { t in
+        t.column("id", .blob).primaryKey()
+        
+        // Sort player names in a localized case insensitive fashion by default
+        // See https://github.com/groue/GRDB.swift/blob/master/README.md#unicode
+        t.column("taskName", .text)
+        t.column("startTime", .datetime).notNull()
+        t.column("isActive", .boolean).notNull()
+        t.column("projectId", .blob).notNull()
+        t.foreignKey(["projectId"], references: "project", columns: ["id"], onDelete: .cascade, onUpdate: .none, deferred: false)
       }
     }
     

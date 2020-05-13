@@ -9,35 +9,35 @@
 import Combine
 import UIKit
 
-@objc protocol ProjectListCellDelegate {
-  func buttonWasPressed(in projectListCell: ProjectListCell)
+@objc protocol CurrentlyRunningTimeRecordCellDelegate {
+  func buttonWasPressed(inCurrentlyRunningTimeRecordCell: CurrentlyRunningTimeRecordCell)
 }
 
-class ProjectListCell: UICollectionViewCell {
-  weak var delegate: ProjectListCellDelegate?
+class CurrentlyRunningTimeRecordCell: UICollectionViewCell {
+  weak var delegate: CurrentlyRunningTimeRecordCellDelegate?
   var subscriptions = Set<AnyCancellable>()
-
+  
   @objc func buttonPressed(sender: UIButton) {
-    delegate?.buttonWasPressed(in: self)
+    delegate?.buttonWasPressed(inCurrentlyRunningTimeRecordCell: self)
   }
-
+  
   let label = UILabel()
   let button = UIButton(type: .system)
-  static let resuseIdentifier = "project-list-cell-reuse-identifier"
-
+  static let reuseIdentifier = "currently-running-time-record-cell-reuse-identifier"
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     configure()
   }
-
+  
   required init?(coder: NSCoder) {
     fatalError()
   }
 }
 
-extension ProjectListCell {
+extension CurrentlyRunningTimeRecordCell {
   func configure() {
-
+    
     label.layer.borderWidth = 1.0
     label.backgroundColor = .secondarySystemBackground
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -45,15 +45,15 @@ extension ProjectListCell {
     label.textAlignment = .center
     label.setContentHuggingPriority(.defaultLow, for: .horizontal)
     contentView.addSubview(label)
-
-    button.setTitle("Start", for: .normal)
+    
+    button.setTitle("Stop", for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     button.backgroundColor = .secondarySystemBackground
     button.layer.borderWidth = 1.0
     button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
     contentView.addSubview(button)
-
+    
     NSLayoutConstraint.activate([
       label.leadingAnchor.constraint(equalTo: button.trailingAnchor, constant: 5),
       label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
@@ -64,5 +64,5 @@ extension ProjectListCell {
       button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
     ])
   }
-
+  
 }

@@ -12,8 +12,6 @@ import GRDB
 struct Project {
   var id: UUID = UUID()
   var name: String
-
-  static let timeRecords = hasMany(TimeRecord.self)
 }
 
 extension Project: Hashable {}
@@ -26,4 +24,13 @@ extension Project: Codable, FetchableRecord, MutablePersistableRecord {
     static let id = Column(CodingKeys.id)
     static let name = Column(CodingKeys.name)
   }
+}
+
+extension Project {
+  static let timeRecords = hasMany(TimeRecord.self)
+  
+  var timeRecords: QueryInterfaceRequest<TimeRecord> {
+    request(for: Project.timeRecords)
+  }
+
 }

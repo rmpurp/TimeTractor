@@ -9,33 +9,33 @@
 import Foundation
 import GRDB
 
-struct TimeRecord {
+struct RunningTimer {
   var id: UUID = UUID()
   var taskName: String?
   var startTime: Date
-  var endTime: Date?
+  var isActive: Bool
   var projectId: UUID
 }
 
-extension TimeRecord: Hashable {}
+extension RunningTimer: Hashable {}
 
 // Turn Player into a Codable Record.
 // See https://github.com/groue/GRDB.swift/blob/master/README.md#records
-extension TimeRecord: Codable, FetchableRecord, MutablePersistableRecord {
+extension RunningTimer: Codable, FetchableRecord, MutablePersistableRecord {
   // Define database columns from CodingKeys
   private enum Columns {
     static let id = Column(CodingKeys.id)
     static let name = Column(CodingKeys.taskName)
     static let endTime = Column(CodingKeys.startTime)
-    static let startTime = Column(CodingKeys.endTime)
     static let projectId = Column(CodingKeys.projectId)
+    static let isActive = Column(CodingKeys.isActive)
   }
 }
 
-extension TimeRecord {
+extension RunningTimer {
   static let project = belongsTo(Project.self)
   
   var project: QueryInterfaceRequest<Project> {
-    request(for: TimeRecord.project)
+    request(for: RunningTimer.project)
   }
 }
