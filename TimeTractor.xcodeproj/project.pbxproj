@@ -51,6 +51,7 @@
 		D861773C246A933100A4C9D4 /* TimeRecordInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecordInfo.swift; sourceTree = "<group>"; };
 		D861773F246BC90200A4C9D4 /* RunningTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimer.swift; sourceTree = "<group>"; };
 		D8617741246BCB0B00A4C9D4 /* RunningTimerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimerInfo.swift; sourceTree = "<group>"; };
+		D8617743246BD11700A4C9D4 /* TimeTractor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimeTractor.entitlements; sourceTree = "<group>"; };
 		D862D9122463AE740031E3AB /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
 		D862D9142464EB100031E3AB /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		D862D9172464F03D0031E3AB /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
@@ -141,6 +142,7 @@
 		D886E9C02458D4DB005F2571 /* TimeTractor */ = {
 			isa = PBXGroup;
 			children = (
+				D8617743246BD11700A4C9D4 /* TimeTractor.entitlements */,
 				D8C98EA8246A6A9A0097FA48 /* Components */,
 				D862D9162464F0320031E3AB /* Model */,
 				D886E9C12458D4DB005F2571 /* AppDelegate.swift */,
@@ -494,6 +496,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TimeTractor/TimeTractor.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2A3N3385D2;
 				INFOPLIST_FILE = TimeTractor/Info.plist;
@@ -503,6 +506,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rpurp.TimeTractor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -512,6 +516,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TimeTractor/TimeTractor.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2A3N3385D2;
 				INFOPLIST_FILE = TimeTractor/Info.plist;
@@ -521,6 +526,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rpurp.TimeTractor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
