@@ -23,6 +23,9 @@ class ProjectListCell: UICollectionViewCell {
 
   let label = UILabel()
   let button = UIButton(type: .system)
+  let separatorView = UIView()
+  let accessoryImageView = UIImageView()
+
   static let reuseIdentifier = "project-list-cell-reuse-identifier"
 
   override init(frame: CGRect) {
@@ -37,23 +40,37 @@ class ProjectListCell: UICollectionViewCell {
 
 extension ProjectListCell {
   func configure() {
+    let inset: CGFloat = 10
 
-    label.layer.borderWidth = 1.0
-    label.backgroundColor = .secondarySystemBackground
     label.translatesAutoresizingMaskIntoConstraints = false
     label.adjustsFontForContentSizeCategory = true
-    label.textAlignment = .center
+    label.textAlignment = .left
     label.setContentHuggingPriority(.defaultLow, for: .horizontal)
     contentView.addSubview(label)
 
     button.setTitle("Start", for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    button.backgroundColor = .secondarySystemBackground
-    button.layer.borderWidth = 1.0
+    button.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    button.layer.cornerRadius = 10
+//    button.layer.borderWidth = 1.0
     button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
     contentView.addSubview(button)
 
+    
+    separatorView.translatesAutoresizingMaskIntoConstraints = false
+    separatorView.backgroundColor = .lightGray
+    contentView.addSubview(separatorView)
+    
+    let rtl = effectiveUserInterfaceLayoutDirection == .rightToLeft
+    let chevronImageName = rtl ? "chevron.left" : "chevron.right"
+    let chevronImage = UIImage(systemName: chevronImageName)
+    
+    accessoryImageView.translatesAutoresizingMaskIntoConstraints = false
+    accessoryImageView.image = chevronImage
+    accessoryImageView.tintColor = UIColor.lightGray.withAlphaComponent(0.7)
+    contentView.addSubview(accessoryImageView)
+    
     NSLayoutConstraint.activate([
       label.leadingAnchor.constraint(equalTo: button.trailingAnchor, constant: 5),
       label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
@@ -62,6 +79,15 @@ extension ProjectListCell {
       button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
       button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
       button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+      separatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
+      separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+      separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
+      separatorView.heightAnchor.constraint(equalToConstant: 0.5),
+      
+      accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      accessoryImageView.widthAnchor.constraint(equalToConstant: 13),
+      accessoryImageView.heightAnchor.constraint(equalToConstant: 20),
+      accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
     ])
   }
 

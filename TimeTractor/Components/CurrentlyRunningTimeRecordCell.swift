@@ -37,20 +37,21 @@ class CurrentlyRunningTimeRecordCell: UICollectionViewCell {
 
 extension CurrentlyRunningTimeRecordCell {
   func configure() {
-    
-    label.layer.borderWidth = 1.0
-    label.backgroundColor = .secondarySystemBackground
+    let inset = CGFloat(10)
+
     label.translatesAutoresizingMaskIntoConstraints = false
     label.adjustsFontForContentSizeCategory = true
-    label.textAlignment = .center
+    label.textAlignment = .left
     label.setContentHuggingPriority(.defaultLow, for: .horizontal)
     contentView.addSubview(label)
     
     button.setTitle("Stop", for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    button.backgroundColor = .secondarySystemBackground
-    button.layer.borderWidth = 1.0
+    
+    button.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    button.layer.cornerRadius = 10
+
     button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
     contentView.addSubview(button)
     

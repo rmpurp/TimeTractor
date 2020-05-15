@@ -20,29 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func setupDatabase(_ application: UIApplication) throws {
-        let _ = try FileManager.default
+        let databaseFile = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("db.sqlite")
-        
-        #if DEBUG
-        NSLog("Creating debug categories...")
-        dbQueue = try AppDatabase.openDatabase(atPath: ":memory:")
-        try! dbQueue.write { db in
-            var cat1 = Project(name: "Cook")
-            var cat2 = Project(name: "Sleep")
-            var cat3 = Project(name: "CS 195")
-            var cat4 = Project(name: "CS 189")
-            var cat5 = Project(name: "EE 120")
-
-            try cat1.insert(db)
-            try cat2.insert(db)
-            try cat3.insert(db)
-            try cat4.insert(db)
-            try cat5.insert(db)
-            
-        }
-        #endif
-    }
+      
+      
+      dbQueue = try AppDatabase.openDatabase(atPath: databaseFile.path)
+      
+  }
     
     
     // MARK: UISceneSession Lifecycle
