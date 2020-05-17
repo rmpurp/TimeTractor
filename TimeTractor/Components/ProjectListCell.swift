@@ -22,6 +22,8 @@ class ProjectListCell: UICollectionViewCell {
   }
 
   let label = UILabel()
+  let subtitleLabel = UILabel()
+  
   let button = UIButton(type: .system)
   let separatorView = UIView()
   let accessoryImageView = UIImageView()
@@ -40,7 +42,7 @@ class ProjectListCell: UICollectionViewCell {
 
 extension ProjectListCell {
   func configure() {
-    let inset: CGFloat = 10
+    let inset: CGFloat = 15
 
     label.translatesAutoresizingMaskIntoConstraints = false
     label.adjustsFontForContentSizeCategory = true
@@ -48,18 +50,31 @@ extension ProjectListCell {
     label.setContentHuggingPriority(.defaultLow, for: .horizontal)
     contentView.addSubview(label)
 
-    button.setTitle("Start", for: .normal)
+    subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    subtitleLabel.adjustsFontForContentSizeCategory = true
+    subtitleLabel.textAlignment = .right
+    if arc4random() % 10 < 2 {
+    subtitleLabel.text = "5:35\ntoday"
+    }
+    subtitleLabel.textColor = .secondaryLabel
+    subtitleLabel.numberOfLines = 2
+    subtitleLabel.font = .monospacedDigitSystemFont(ofSize: 12, weight: .regular)
+    
+//    subtitleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    contentView.addSubview(subtitleLabel)
+
+//    button.setTitle("Start", for: .normal)
+    button.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     button.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-    button.layer.cornerRadius = 10
-//    button.layer.borderWidth = 1.0
+
     button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
     contentView.addSubview(button)
 
     
     separatorView.translatesAutoresizingMaskIntoConstraints = false
-    separatorView.backgroundColor = .lightGray
+    separatorView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
     contentView.addSubview(separatorView)
     
     let rtl = effectiveUserInterfaceLayoutDirection == .rightToLeft
@@ -69,25 +84,32 @@ extension ProjectListCell {
     accessoryImageView.translatesAutoresizingMaskIntoConstraints = false
     accessoryImageView.image = chevronImage
     accessoryImageView.tintColor = UIColor.lightGray.withAlphaComponent(0.7)
+    accessoryImageView.isHidden = true
     contentView.addSubview(accessoryImageView)
     
     NSLayoutConstraint.activate([
-      label.leadingAnchor.constraint(equalTo: button.trailingAnchor, constant: 5),
-      label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+      label.leadingAnchor.constraint(equalTo: button.trailingAnchor),
       label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
       label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-      button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-      button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-      button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-      separatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
+
+      button.topAnchor.constraint(equalTo: contentView.topAnchor),
+      button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+      button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+
+      separatorView.leadingAnchor.constraint(equalTo: button.trailingAnchor, constant: 0),
       separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-      separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
+      separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       separatorView.heightAnchor.constraint(equalToConstant: 0.5),
       
-      accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      accessoryImageView.widthAnchor.constraint(equalToConstant: 13),
-      accessoryImageView.heightAnchor.constraint(equalToConstant: 20),
-      accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
+      subtitleLabel.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 10),
+      subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+      subtitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+      subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+
+//      accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+//      accessoryImageView.widthAnchor.constraint(equalToConstant: 13),
+//      accessoryImageView.heightAnchor.constraint(equalToConstant: 20),
+//      accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
     ])
   }
 

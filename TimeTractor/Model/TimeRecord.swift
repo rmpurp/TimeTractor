@@ -34,7 +34,7 @@ extension TimeRecord: Codable, FetchableRecord, MutablePersistableRecord {
 
 extension TimeRecord {
   static let project = belongsTo(Project.self)
-  
+
   var project: QueryInterfaceRequest<Project> {
     request(for: TimeRecord.project)
   }

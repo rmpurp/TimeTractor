@@ -37,32 +37,31 @@ class CurrentlyRunningTimeRecordCell: UICollectionViewCell {
 
 extension CurrentlyRunningTimeRecordCell {
   func configure() {
-    let inset = CGFloat(10)
+    let inset = CGFloat(15)
 
     label.translatesAutoresizingMaskIntoConstraints = false
     label.adjustsFontForContentSizeCategory = true
     label.textAlignment = .left
     label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    label.font = .monospacedDigitSystemFont(ofSize: 17, weight: .regular)
     contentView.addSubview(label)
     
-    button.setTitle("Stop", for: .normal)
+    button.setImage(UIImage(systemName: "stop.circle.fill"), for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    
     button.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-    button.layer.cornerRadius = 10
-
     button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
+
     contentView.addSubview(button)
     
     NSLayoutConstraint.activate([
-      label.leadingAnchor.constraint(equalTo: button.trailingAnchor, constant: 5),
+      label.leadingAnchor.constraint(equalTo: button.trailingAnchor),
       label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
       label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
       label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-      button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-      button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-      button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+      button.topAnchor.constraint(equalTo: contentView.topAnchor),
+      button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+      button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
     ])
   }
   

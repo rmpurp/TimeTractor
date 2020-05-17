@@ -11,7 +11,6 @@ import UIKit
 class SectionBackgroundDecorationView: UICollectionReusableView {
   override init(frame: CGRect) {
     super.init(frame: frame)
-    print("HI")
     configure()
   }
   required init?(coder: NSCoder) {
@@ -21,7 +20,7 @@ class SectionBackgroundDecorationView: UICollectionReusableView {
 
 extension SectionBackgroundDecorationView {
   func configure() {
-    backgroundColor = .systemBackground
+    backgroundColor = .secondarySystemGroupedBackground
     layer.borderColor = UIColor.black.cgColor
     layer.cornerRadius = 12
   }

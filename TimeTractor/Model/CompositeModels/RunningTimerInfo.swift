@@ -14,4 +14,4 @@ struct RunningTimerInfo: FetchableRecord, Decodable {
   var project: Project
 }
 
-extension RunningTimerInfo: Hashable { }
+extension RunningTimerInfo: Hashable {}

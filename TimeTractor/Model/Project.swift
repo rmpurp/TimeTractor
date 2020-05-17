@@ -28,7 +28,7 @@ extension Project: Codable, FetchableRecord, MutablePersistableRecord {
 
 extension Project {
   static let timeRecords = hasMany(TimeRecord.self)
-  
+
   var timeRecords: QueryInterfaceRequest<TimeRecord> {
     request(for: Project.timeRecords)
   }

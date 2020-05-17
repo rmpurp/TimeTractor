@@ -37,6 +37,8 @@ class ViewController: UIViewController {
 
   var currentTimeRecord: RunningTimerInfo? = nil
 
+  private var firstRender = true
+
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
@@ -44,7 +46,6 @@ class ViewController: UIViewController {
     self.navigationController?.navigationBar.prefersLargeTitles = true
     configureHierarchy()
     configureDataSource()
-    self.collectionView.backgroundColor = .secondarySystemBackground
 
     setupDebugFunctionality()
   }
@@ -52,10 +53,11 @@ class ViewController: UIViewController {
   func setupDebugFunctionality() {
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       barButtonSystemItem: .add, target: self, action: #selector(debugAddProject))
-    
-    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(debugPrintAllTimeEvents ))
+
+    navigationItem.leftBarButtonItem = UIBarButtonItem(
+      barButtonSystemItem: .bookmarks, target: self, action: #selector(debugPrintAllTimeEvents))
   }
-  
+
   @objc func debugPrintAllTimeEvents() {
     try! dbQueue.read { db -> [TimeRecordInfo] in
       let request = TimeRecord.including(required: TimeRecord.project)
@@ -72,24 +74,25 @@ class ViewController: UIViewController {
     }
   }
 
-//  func configureBottomBar() {
-//    bottomBar = UIView()
-//    bottomBar.translatesAutoresizingMaskIntoConstraints = false
-//    view.addSubview(bottomBar)
-//    bottomBar.backgroundColor = UIColor(displayP3Red: 0, green: 1, blue: 0, alpha: 0.5)
-//    NSLayoutConstraint.activate([
-//      bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//      bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//      bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//      bottomBar.heightAnchor.constraint(equalToConstant: 100),
-//    ])
-//  }
+  //  func configureBottomBar() {
+  //    bottomBar = UIView()
+  //    bottomBar.translatesAutoresizingMaskIntoConstraints = false
+  //    view.addSubview(bottomBar)
+  //    bottomBar.backgroundColor = UIColor(displayP3Red: 0, green: 1, blue: 0, alpha: 0.5)
+  //    NSLayoutConstraint.activate([
+  //      bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+  //      bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+  //      bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+  //      bottomBar.heightAnchor.constraint(equalToConstant: 100),
+  //    ])
+  //  }
 }
 
 // MARK: - Collection View Layout
 
 extension ViewController {
   static let sectionBackgroundDecorationElementKind = "section-background-element-kind"
+  static let sectionHeaderElementKind = "section-header-element-kind"
 
   func createLayout() -> UICollectionViewLayout {
     let itemSize = NSCollectionLayoutSize(
@@ -103,21 +106,31 @@ extension ViewController {
     let group = NSCollectionLayoutGroup.horizontal(
       layoutSize: groupSize,
       subitems: [item])
-    
+
     let section = NSCollectionLayoutSection(group: group)
-    section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
-        
+    section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20)
+
     let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(
       elementKind: ViewController.sectionBackgroundDecorationElementKind)
-    sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 20)
+
+    let headerSize = NSCollectionLayoutSize(
+      widthDimension: .fractionalWidth(1.0),
+      heightDimension: .estimated(44))
+    let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+      layoutSize: headerSize,
+      elementKind: ViewController.sectionHeaderElementKind, alignment: .top)
+    section.boundarySupplementaryItems = [sectionHeader]
+
+    sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(
+      top: 0, leading: 20, bottom: 20, trailing: 20)
     section.decorationItems = [sectionBackgroundDecoration]
-    
+
     let layout = UICollectionViewCompositionalLayout(section: section)
 
     layout.register(
       SectionBackgroundDecorationView.self,
       forDecorationViewOfKind: ViewController.sectionBackgroundDecorationElementKind)
-    
+
     return layout
   }
 
@@ -127,14 +140,19 @@ extension ViewController {
     collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     view.addSubview(collectionView)
-    collectionView.backgroundColor = .systemBackground
+    collectionView.backgroundColor = .systemGroupedBackground
 
     collectionView.register(
       ProjectListCell.self, forCellWithReuseIdentifier: ProjectListCell.reuseIdentifier)
     collectionView.register(
       CurrentlyRunningTimeRecordCell.self,
       forCellWithReuseIdentifier: CurrentlyRunningTimeRecordCell.reuseIdentifier)
-    collectionView.dragInteractionEnabled = true
+    collectionView.register(
+      TitleSupplementaryView.self,
+      forSupplementaryViewOfKind: ViewController.sectionHeaderElementKind,
+      withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
+
+    collectionView.allowsSelection = true
   }
 }
 
@@ -145,14 +163,17 @@ extension ViewController {
       .getRunningTimerPublisher()
       .sink(receiveCompletion: { _ in }) {
         var snapshot = self.dataSource.snapshot()
-        
+
         if let currentTimeRecord = $0 {
-          
+
           if snapshot.sectionIdentifiers.contains(.CurrentlyRunning) {
             snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .CurrentlyRunning))
-          } else {
+          } else if snapshot.sectionIdentifiers.contains(.ProjectList) {
             snapshot.insertSections([.CurrentlyRunning], beforeSection: .ProjectList)
+          } else {
+            snapshot.appendSections([.CurrentlyRunning])
           }
+
           self.currentTimeRecord = currentTimeRecord
           snapshot.appendItems(
             [Item.runningTimer(currentTimeRecord)], toSection: .CurrentlyRunning)
@@ -162,31 +183,23 @@ extension ViewController {
 
         self.dataSource.apply(snapshot)
         guard let currentTimeRecord = self.currentTimeRecord else { return }
-        guard let indexPath = self.dataSource.indexPath(for: .runningTimer(currentTimeRecord)) else { return }
+        guard let indexPath = self.dataSource.indexPath(for: .runningTimer(currentTimeRecord))
+        else { return }
         self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-        
       }
       .store(in: &subscriptions)
   }
-
-  //
-  //  private func setUpProjectListCellSubscription(
-  //    _ projectListCell: ProjectListCell, with project: Project
-  //  ) {
-  //    projectListCell.subscriptions.removeAll()
-  //    self.timeRecordController.getProjectInfoPublisher(for: project.id)
-  //      .sink(receiveCompletion: { _ in
-  //      }) { count in
-  //        projectListCell.label.text = "\(project.name) \(count)"
-  //    }.store(in: &projectListCell.subscriptions)
-  //  }
 
   private func setUpProjectsSubscription() {
     self.timeRecordController.getAllProjectsPublisher()
       .sink(receiveCompletion: { _ in }) { [unowned self] projects in
         var snapshot = self.dataSource.snapshot()
+        if !snapshot.sectionIdentifiers.contains(.ProjectList) {
+          snapshot.appendSections([.ProjectList])
+        }
         snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .ProjectList))
-        snapshot.appendItems(projects.sorted(by: \.name).map { Item.project($0) }, toSection: .ProjectList)
+        snapshot.appendItems(
+          projects.sorted(by: \.name).map { Item.project($0) }, toSection: .ProjectList)
         self.dataSource.apply(snapshot)
       }.store(in: &subscriptions)
   }
@@ -219,14 +232,36 @@ extension ViewController {
           self.displayLink.add(to: .main, forMode: .common)
           return cell
         }
-
-        //        self?.setUpProjectListCellSubscription(cell, with: project)
-
       })
-    
-    var snapshot = self.dataSource.snapshot()
-    snapshot.appendSections([.ProjectList])
-    dataSource.apply(snapshot)
+
+    dataSource.supplementaryViewProvider = {
+      (
+        collectionView: UICollectionView,
+        kind: String,
+        indexPath: IndexPath
+      ) -> UICollectionReusableView? in
+
+      var title = "N/A"
+      switch self.dataSource.itemIdentifier(for: indexPath) {
+      case .project:
+        title = "Projects"
+      case .runningTimer:
+        title = "Running Timer"
+      case nil:
+        break
+      }
+
+      let supplementaryView =
+        collectionView.dequeueReusableSupplementaryView(
+          ofKind: kind,
+          withReuseIdentifier: TitleSupplementaryView.reuseIdentifier,
+          for: indexPath) as! TitleSupplementaryView
+
+      supplementaryView.label.text = title
+
+      return supplementaryView
+    }
+
     setUpCurrentlyRunningSubscription()
     setUpProjectsSubscription()
   }
@@ -238,19 +273,17 @@ extension ViewController {
     let elapsedTime = date.timeIntervalSince(runningTimerInfo.runningTimer.startTime)
     return "\(runningTimerInfo.project.name) \(Int(elapsedTime)) seconds"
   }
-  
+
   @objc func tick() {
     guard let currentTimeRecord = self.currentTimeRecord else { return }
-    guard let indexPath = self.dataSource.indexPath(for: Item.runningTimer(currentTimeRecord)) else { return }
+    guard let indexPath = self.dataSource.indexPath(for: Item.runningTimer(currentTimeRecord))
+    else { return }
     guard let cell = self.collectionView.cellForItem(at: indexPath) else { return }
 
-    (cell as! CurrentlyRunningTimeRecordCell).label.text = getFormattedText(for: currentTimeRecord, at: Date())
+    (cell as! CurrentlyRunningTimeRecordCell).label.text = getFormattedText(
+      for: currentTimeRecord, at: Date())
   }
 }
-
-
-
-
 
 // MARK: - Project List Cell Delegate Conformance
 extension ViewController: ProjectListCellDelegate {
@@ -261,7 +294,8 @@ extension ViewController: ProjectListCellDelegate {
 
     try! dbQueue.write { db in
       try TimeRecord.filter(Column("currentlyRunning") == true).deleteAll(db)
-      try RunningTimer.filter(Column("isActive") == true).updateAll(db, Column("isActive").set(to: false))
+      try RunningTimer.filter(Column("isActive") == true).updateAll(
+        db, Column("isActive").set(to: false))
       var runningTimer = RunningTimer(startTime: Date(), isActive: true, projectId: project.id)
       try! runningTimer.insert(db)
     }
@@ -271,7 +305,9 @@ extension ViewController: ProjectListCellDelegate {
 
 extension ViewController: CurrentlyRunningTimeRecordCellDelegate {
   func buttonWasPressed(inCurrentlyRunningTimeRecordCell: CurrentlyRunningTimeRecordCell) {
-    guard let indexPath = collectionView.indexPath(for: inCurrentlyRunningTimeRecordCell) else { return }
+    guard let indexPath = collectionView.indexPath(for: inCurrentlyRunningTimeRecordCell) else {
+      return
+    }
     guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
     guard case Item.runningTimer(let runningTimerInfo) = item else { return }
     self.timeRecordController.complete(runningTimer: runningTimerInfo.runningTimer, at: Date())

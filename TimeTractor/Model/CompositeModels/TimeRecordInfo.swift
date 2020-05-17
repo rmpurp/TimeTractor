@@ -14,4 +14,4 @@ struct TimeRecordInfo: FetchableRecord, Decodable {
   var project: Project
 }
 
-extension TimeRecordInfo: Hashable { }
+extension TimeRecordInfo: Hashable {}
