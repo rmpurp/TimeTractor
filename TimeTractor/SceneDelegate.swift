@@ -22,20 +22,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let window = UIWindow(windowScene: windowScene)
 
-    #if targetEnvironment(macCatalyst)
-      if let titlebar = windowScene.titlebar {
-        let toolbar = NSToolbar(identifier: "TEST")
-        titlebar.titleVisibility = .hidden
-        titlebar.toolbar = toolbar
-      }
-      //    window.rootViewController = ViewController()
-      self.window = window
-    #else
-      //    window.rootViewController = UINavigationController(rootViewController: ViewController())
-    #endif
+    //    #if targetEnvironment(macCatalyst)
+    //      if let titlebar = windowScene.titlebar {
+    //        let toolbar = NSToolbar(identifier: "TEST")
+    //        titlebar.titleVisibility = .hidden
+    //        titlebar.toolbar = toolbar
+    //      }
+    //      //    window.rootViewController = ViewController()
+    //      self.window = window
+    //    #else
+    //      //    window.rootViewController = UINavigationController(rootViewController: ViewController())
+    //    #endif
     let navController = UINavigationController(rootViewController: ViewController())
+    let debugController = DebugViewController()
+    debugController.setRootController(navController)
+    window.rootViewController = debugController
 
-    window.rootViewController = navController
+    //    window.rootViewController = navController
     self.window = window
     window.makeKeyAndVisible()
 

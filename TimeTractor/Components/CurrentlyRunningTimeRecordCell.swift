@@ -16,20 +16,20 @@ import UIKit
 class CurrentlyRunningTimeRecordCell: UICollectionViewCell {
   weak var delegate: CurrentlyRunningTimeRecordCellDelegate?
   var subscriptions = Set<AnyCancellable>()
-  
+
   @objc func buttonPressed(sender: UIButton) {
     delegate?.buttonWasPressed(inCurrentlyRunningTimeRecordCell: self)
   }
-  
+
   let label = UILabel()
   let button = UIButton(type: .system)
   static let reuseIdentifier = "currently-running-time-record-cell-reuse-identifier"
-  
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     configure()
   }
-  
+
   required init?(coder: NSCoder) {
     fatalError()
   }
@@ -45,7 +45,7 @@ extension CurrentlyRunningTimeRecordCell {
     label.setContentHuggingPriority(.defaultLow, for: .horizontal)
     label.font = .monospacedDigitSystemFont(ofSize: 17, weight: .regular)
     contentView.addSubview(label)
-    
+
     button.setImage(UIImage(systemName: "stop.circle.fill"), for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -53,7 +53,7 @@ extension CurrentlyRunningTimeRecordCell {
     button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
 
     contentView.addSubview(button)
-    
+
     NSLayoutConstraint.activate([
       label.leadingAnchor.constraint(equalTo: button.trailingAnchor),
       label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
@@ -64,5 +64,5 @@ extension CurrentlyRunningTimeRecordCell {
       button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
     ])
   }
-  
+
 }

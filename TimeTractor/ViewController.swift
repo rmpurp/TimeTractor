@@ -18,8 +18,8 @@ class ViewController: UIViewController {
   }
 
   enum Item: Hashable {
-    case project(Project)
-    case runningTimer(RunningTimerInfo)
+    case project(ProjectViewModel)
+    case runningTimer(RunningTimerViewModel)
   }
 
   private func randomString(length: Int) -> String {
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
 
   var timeRecordController: TimeRecordController! = nil
 
-  var currentTimeRecord: RunningTimerInfo? = nil
+  var currentTimeRecord: RunningTimerViewModel? = nil
 
   private var firstRender = true
 
@@ -46,7 +46,6 @@ class ViewController: UIViewController {
     self.navigationController?.navigationBar.prefersLargeTitles = true
     configureHierarchy()
     configureDataSource()
-
     setupDebugFunctionality()
   }
 
@@ -153,54 +152,36 @@ extension ViewController {
       withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
 
     collectionView.allowsSelection = true
+    collectionView.alwaysBounceVertical = true
+    collectionView.bounces = true
   }
 }
 
 // MARK: - Collection View Data Sourcing
 extension ViewController {
-  private func setUpCurrentlyRunningSubscription() {
-    self.timeRecordController
-      .getRunningTimerPublisher()
-      .sink(receiveCompletion: { _ in }) {
-        var snapshot = self.dataSource.snapshot()
+  private func setUpSubscription() {
+    timeRecordController.getDataPublisher(date: Date())
+      .sink(receiveCompletion: { (error) in
 
-        if let currentTimeRecord = $0 {
+      }) {
+        let (runningTimerViewModel, projects) = $0
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        self.currentTimeRecord = runningTimerViewModel
 
-          if snapshot.sectionIdentifiers.contains(.CurrentlyRunning) {
-            snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .CurrentlyRunning))
-          } else if snapshot.sectionIdentifiers.contains(.ProjectList) {
-            snapshot.insertSections([.CurrentlyRunning], beforeSection: .ProjectList)
-          } else {
-            snapshot.appendSections([.CurrentlyRunning])
-          }
-
-          self.currentTimeRecord = currentTimeRecord
+        if let runningTimerViewModel = runningTimerViewModel {
+          snapshot.appendSections([.CurrentlyRunning])
           snapshot.appendItems(
-            [Item.runningTimer(currentTimeRecord)], toSection: .CurrentlyRunning)
-        } else {
-          snapshot.deleteSections([.CurrentlyRunning])
+            [Item.runningTimer(runningTimerViewModel)], toSection: .CurrentlyRunning)
+        }
+        snapshot.appendSections([.ProjectList])
+        let projectsToAdd = projects.sorted(by: \.name).map { Item.project($0) }
+        snapshot.appendItems(projectsToAdd, toSection: .ProjectList)
+
+        self.dataSource.apply(snapshot, animatingDifferences: true) {
+          snapshot.reloadItems(projectsToAdd)
+          self.dataSource.apply(snapshot, animatingDifferences: false)
         }
 
-        self.dataSource.apply(snapshot)
-        guard let currentTimeRecord = self.currentTimeRecord else { return }
-        guard let indexPath = self.dataSource.indexPath(for: .runningTimer(currentTimeRecord))
-        else { return }
-        self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-      }
-      .store(in: &subscriptions)
-  }
-
-  private func setUpProjectsSubscription() {
-    self.timeRecordController.getAllProjectsPublisher()
-      .sink(receiveCompletion: { _ in }) { [unowned self] projects in
-        var snapshot = self.dataSource.snapshot()
-        if !snapshot.sectionIdentifiers.contains(.ProjectList) {
-          snapshot.appendSections([.ProjectList])
-        }
-        snapshot.deleteItems(snapshot.itemIdentifiers(inSection: .ProjectList))
-        snapshot.appendItems(
-          projects.sorted(by: \.name).map { Item.project($0) }, toSection: .ProjectList)
-        self.dataSource.apply(snapshot)
       }.store(in: &subscriptions)
   }
 
@@ -211,21 +192,23 @@ extension ViewController {
       collectionView: collectionView,
       cellProvider: { [unowned self] (collectionView, indexPath, item) in
         switch item {
-        case .project(let project):
+        case .project(let projectViewModel):
           let cell =
             collectionView.dequeueReusableCell(
               withReuseIdentifier: ProjectListCell.reuseIdentifier, for: indexPath)
             as! ProjectListCell
 
-          cell.label.text = project.name
+          cell.label.text = projectViewModel.name
+          cell.subtitleLabel.text = projectViewModel.statusMessage
           cell.delegate = self
           return cell
+
         case .runningTimer(let runningTimerInfo):
           let cell =
             collectionView.dequeueReusableCell(
               withReuseIdentifier: CurrentlyRunningTimeRecordCell.reuseIdentifier, for: indexPath)
             as! CurrentlyRunningTimeRecordCell
-          cell.label.text = self.getFormattedText(for: runningTimerInfo, at: Date())
+          cell.label.text = runningTimerInfo.timeDisplay(at: Date())
           cell.delegate = self
           self.displayLink = CADisplayLink(target: self, selector: #selector(self.tick))
           self.displayLink.preferredFramesPerSecond = 1
@@ -262,8 +245,9 @@ extension ViewController {
       return supplementaryView
     }
 
-    setUpCurrentlyRunningSubscription()
-    setUpProjectsSubscription()
+    //    setUpCurrentlyRunningSubscription()
+    //    setUpProjectsSubscription()
+    setUpSubscription()
   }
 
 }
@@ -280,8 +264,8 @@ extension ViewController {
     else { return }
     guard let cell = self.collectionView.cellForItem(at: indexPath) else { return }
 
-    (cell as! CurrentlyRunningTimeRecordCell).label.text = getFormattedText(
-      for: currentTimeRecord, at: Date())
+    (cell as! CurrentlyRunningTimeRecordCell).label.text = currentTimeRecord.timeDisplay(at: Date())
+
   }
 }
 
@@ -310,6 +294,6 @@ extension ViewController: CurrentlyRunningTimeRecordCellDelegate {
     }
     guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
     guard case Item.runningTimer(let runningTimerInfo) = item else { return }
-    self.timeRecordController.complete(runningTimer: runningTimerInfo.runningTimer, at: Date())
+    self.timeRecordController.complete(runningTimerId: runningTimerInfo.id, at: Date())
   }
 }

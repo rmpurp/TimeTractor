@@ -23,7 +23,7 @@ class ProjectListCell: UICollectionViewCell {
 
   let label = UILabel()
   let subtitleLabel = UILabel()
-  
+
   let button = UIButton(type: .system)
   let separatorView = UIView()
   let accessoryImageView = UIImageView()
@@ -53,17 +53,14 @@ extension ProjectListCell {
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
     subtitleLabel.adjustsFontForContentSizeCategory = true
     subtitleLabel.textAlignment = .right
-    if arc4random() % 10 < 2 {
-    subtitleLabel.text = "5:35\ntoday"
-    }
     subtitleLabel.textColor = .secondaryLabel
     subtitleLabel.numberOfLines = 2
     subtitleLabel.font = .monospacedDigitSystemFont(ofSize: 12, weight: .regular)
-    
-//    subtitleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+    //    subtitleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
     contentView.addSubview(subtitleLabel)
 
-//    button.setTitle("Start", for: .normal)
+    //    button.setTitle("Start", for: .normal)
     button.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -72,21 +69,20 @@ extension ProjectListCell {
     button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
     contentView.addSubview(button)
 
-    
     separatorView.translatesAutoresizingMaskIntoConstraints = false
     separatorView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
     contentView.addSubview(separatorView)
-    
+
     let rtl = effectiveUserInterfaceLayoutDirection == .rightToLeft
     let chevronImageName = rtl ? "chevron.left" : "chevron.right"
     let chevronImage = UIImage(systemName: chevronImageName)
-    
+
     accessoryImageView.translatesAutoresizingMaskIntoConstraints = false
     accessoryImageView.image = chevronImage
     accessoryImageView.tintColor = UIColor.lightGray.withAlphaComponent(0.7)
     accessoryImageView.isHidden = true
     contentView.addSubview(accessoryImageView)
-    
+
     NSLayoutConstraint.activate([
       label.leadingAnchor.constraint(equalTo: button.trailingAnchor),
       label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
@@ -100,16 +96,16 @@ extension ProjectListCell {
       separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
       separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       separatorView.heightAnchor.constraint(equalToConstant: 0.5),
-      
+
       subtitleLabel.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 10),
       subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
       subtitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
       subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
 
-//      accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-//      accessoryImageView.widthAnchor.constraint(equalToConstant: 13),
-//      accessoryImageView.heightAnchor.constraint(equalToConstant: 20),
-//      accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
+      //      accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+      //      accessoryImageView.widthAnchor.constraint(equalToConstant: 13),
+      //      accessoryImageView.heightAnchor.constraint(equalToConstant: 20),
+      //      accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
     ])
   }
 
