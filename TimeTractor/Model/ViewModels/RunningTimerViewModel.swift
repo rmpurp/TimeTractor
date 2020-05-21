@@ -15,7 +15,7 @@ struct RunningTimerViewModel {
   var projectName: String { runningTimerInfo.project.name }
 
   func timeDisplay(at date: Date) -> String {
-    return "\(Int(date.timeIntervalSince(runningTimerInfo.runningTimer.startTime)))"
+    return "\(date.timeIntervalSince(runningTimerInfo.runningTimer.startTime).asFormattedTime)"
   }
 
   init(runningTimerInfo: RunningTimerInfo) {
