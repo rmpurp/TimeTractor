@@ -23,7 +23,12 @@ class TitleSupplementaryView: UICollectionReusableView {
 
 extension TitleSupplementaryView {
   func configure() {
+    isUserInteractionEnabled = false
     addSubview(label)
+
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.adjustsFontForContentSizeCategory = true
+    label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
 
     let rtl = effectiveUserInterfaceLayoutDirection == .rightToLeft
     let chevronImageName = rtl ? "chevron.left" : "chevron.right"
@@ -33,9 +38,6 @@ extension TitleSupplementaryView {
     accessoryImageView.image = chevronImage
     accessoryImageView.tintColor = UIColor.lightGray.withAlphaComponent(0.7)
     addSubview(accessoryImageView)
-
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.adjustsFontForContentSizeCategory = true
 
     let inset = CGFloat(15)
     let bottomInset = CGFloat(5)
@@ -50,8 +52,6 @@ extension TitleSupplementaryView {
       accessoryImageView.widthAnchor.constraint(equalToConstant: 13),
       accessoryImageView.heightAnchor.constraint(equalToConstant: 20),
       accessoryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-
     ])
-    label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
   }
 }

@@ -144,8 +144,8 @@ extension ViewController {
     collectionView.register(
       ProjectListCell.self, forCellWithReuseIdentifier: ProjectListCell.reuseIdentifier)
     collectionView.register(
-      CurrentlyRunningTimeRecordCell.self,
-      forCellWithReuseIdentifier: CurrentlyRunningTimeRecordCell.reuseIdentifier)
+      RunningTimerCell.self,
+      forCellWithReuseIdentifier: RunningTimerCell.reuseIdentifier)
     collectionView.register(
       TitleSupplementaryView.self,
       forSupplementaryViewOfKind: ViewController.sectionHeaderElementKind,
@@ -206,8 +206,8 @@ extension ViewController {
         case .runningTimer(let runningTimerInfo):
           let cell =
             collectionView.dequeueReusableCell(
-              withReuseIdentifier: CurrentlyRunningTimeRecordCell.reuseIdentifier, for: indexPath)
-            as! CurrentlyRunningTimeRecordCell
+              withReuseIdentifier: RunningTimerCell.reuseIdentifier, for: indexPath)
+            as! RunningTimerCell
           cell.label.text = runningTimerInfo.timeDisplay(at: Date())
           cell.delegate = self
           self.displayLink = CADisplayLink(target: self, selector: #selector(self.tick))
@@ -239,7 +239,6 @@ extension ViewController {
           ofKind: kind,
           withReuseIdentifier: TitleSupplementaryView.reuseIdentifier,
           for: indexPath) as! TitleSupplementaryView
-
       supplementaryView.label.text = title
 
       return supplementaryView
@@ -264,7 +263,7 @@ extension ViewController {
     else { return }
     guard let cell = self.collectionView.cellForItem(at: indexPath) else { return }
 
-    (cell as! CurrentlyRunningTimeRecordCell).label.text = currentTimeRecord.timeDisplay(at: Date())
+    (cell as! RunningTimerCell).label.text = currentTimeRecord.timeDisplay(at: Date())
 
   }
 }
@@ -287,8 +286,8 @@ extension ViewController: ProjectListCellDelegate {
 
 }
 
-extension ViewController: CurrentlyRunningTimeRecordCellDelegate {
-  func buttonWasPressed(inCurrentlyRunningTimeRecordCell: CurrentlyRunningTimeRecordCell) {
+extension ViewController: RunningTimerCellDelegate {
+  func buttonWasPressed(inCurrentlyRunningTimeRecordCell: RunningTimerCell) {
     guard let indexPath = collectionView.indexPath(for: inCurrentlyRunningTimeRecordCell) else {
       return
     }

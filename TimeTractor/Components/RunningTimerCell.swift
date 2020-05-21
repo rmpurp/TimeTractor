@@ -9,12 +9,12 @@
 import Combine
 import UIKit
 
-@objc protocol CurrentlyRunningTimeRecordCellDelegate {
-  func buttonWasPressed(inCurrentlyRunningTimeRecordCell: CurrentlyRunningTimeRecordCell)
+@objc protocol RunningTimerCellDelegate {
+  func buttonWasPressed(inCurrentlyRunningTimeRecordCell: RunningTimerCell)
 }
 
-class CurrentlyRunningTimeRecordCell: UICollectionViewCell {
-  weak var delegate: CurrentlyRunningTimeRecordCellDelegate?
+class RunningTimerCell: UICollectionViewCell {
+  weak var delegate: RunningTimerCellDelegate?
   var subscriptions = Set<AnyCancellable>()
 
   @objc func buttonPressed(sender: UIButton) {
@@ -35,7 +35,7 @@ class CurrentlyRunningTimeRecordCell: UICollectionViewCell {
   }
 }
 
-extension CurrentlyRunningTimeRecordCell {
+extension RunningTimerCell {
   func configure() {
     let inset = CGFloat(15)
 

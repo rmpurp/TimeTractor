@@ -19,10 +19,7 @@ struct RunningTimer {
 
 extension RunningTimer: Hashable {}
 
-// Turn Player into a Codable Record.
-// See https://github.com/groue/GRDB.swift/blob/master/README.md#records
 extension RunningTimer: Codable, FetchableRecord, MutablePersistableRecord {
-  // Define database columns from CodingKeys
   private enum Columns {
     static let id = Column(CodingKeys.id)
     static let name = Column(CodingKeys.taskName)
