@@ -32,6 +32,18 @@
 		D886E9D92458D4E0005F2571 /* TimeTractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886E9D82458D4E0005F2571 /* TimeTractorTests.swift */; };
 		D886E9E42458D4E0005F2571 /* TimeTractorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886E9E32458D4E0005F2571 /* TimeTractorUITests.swift */; };
 		D89A805D24767A3D0090DE69 /* ColorChangingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89A805C24767A3D0090DE69 /* ColorChangingButton.swift */; };
+		D8DE8832247733C400F53A32 /* Sequence+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE882F247733C400F53A32 /* Sequence+RPUtilities.swift */; };
+		D8DE8833247733C400F53A32 /* Sequence+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE882F247733C400F53A32 /* Sequence+RPUtilities.swift */; };
+		D8DE8834247733C400F53A32 /* Sequence+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE882F247733C400F53A32 /* Sequence+RPUtilities.swift */; };
+		D8DE8835247733C400F53A32 /* TimeInterval+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE8830247733C400F53A32 /* TimeInterval+RPUtilities.swift */; };
+		D8DE8836247733C400F53A32 /* TimeInterval+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE8830247733C400F53A32 /* TimeInterval+RPUtilities.swift */; };
+		D8DE8837247733C400F53A32 /* TimeInterval+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE8830247733C400F53A32 /* TimeInterval+RPUtilities.swift */; };
+		D8DE8838247733C400F53A32 /* Int+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE8831247733C400F53A32 /* Int+RPUtilities.swift */; };
+		D8DE8839247733C400F53A32 /* Int+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE8831247733C400F53A32 /* Int+RPUtilities.swift */; };
+		D8DE883A247733C400F53A32 /* Int+RPUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE8831247733C400F53A32 /* Int+RPUtilities.swift */; };
+		D8DE883D247736F900F53A32 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE883C247736F900F53A32 /* AppearanceManager.swift */; };
+		D8DE883E247736F900F53A32 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE883C247736F900F53A32 /* AppearanceManager.swift */; };
+		D8DE883F247736F900F53A32 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE883C247736F900F53A32 /* AppearanceManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +94,10 @@
 		D886E9E32458D4E0005F2571 /* TimeTractorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTractorUITests.swift; sourceTree = "<group>"; };
 		D886E9E52458D4E0005F2571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D89A805C24767A3D0090DE69 /* ColorChangingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChangingButton.swift; sourceTree = "<group>"; };
+		D8DE882F247733C400F53A32 /* Sequence+RPUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sequence+RPUtilities.swift"; sourceTree = "<group>"; };
+		D8DE8830247733C400F53A32 /* TimeInterval+RPUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+RPUtilities.swift"; sourceTree = "<group>"; };
+		D8DE8831247733C400F53A32 /* Int+RPUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+RPUtilities.swift"; sourceTree = "<group>"; };
+		D8DE883C247736F900F53A32 /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,10 +162,10 @@
 		D886E9B52458D4DB005F2571 = {
 			isa = PBXGroup;
 			children = (
-				D8DE882A247731F300F53A32 /* RPUtilities */,
 				D886E9C02458D4DB005F2571 /* TimeTractor */,
 				D886E9D72458D4E0005F2571 /* TimeTractorTests */,
 				D886E9E22458D4E0005F2571 /* TimeTractorUITests */,
+				D8DE882E247733C400F53A32 /* RPUtilties */,
 				D886E9BF2458D4DB005F2571 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -208,15 +224,19 @@
 				D884EE512470B40200A77599 /* TitleSupplementaryView.swift */,
 				D89A805C24767A3D0090DE69 /* ColorChangingButton.swift */,
 				D83BF411247251D4002F0C0C /* DebugViewController.swift */,
+				D8DE883C247736F900F53A32 /* AppearanceManager.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		D8DE882A247731F300F53A32 /* RPUtilities */ = {
+		D8DE882E247733C400F53A32 /* RPUtilties */ = {
 			isa = PBXGroup;
 			children = (
+				D8DE882F247733C400F53A32 /* Sequence+RPUtilities.swift */,
+				D8DE8830247733C400F53A32 /* TimeInterval+RPUtilities.swift */,
+				D8DE8831247733C400F53A32 /* Int+RPUtilities.swift */,
 			);
-			path = RPUtilities;
+			path = RPUtilties;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,6 +401,7 @@
 				D89A805D24767A3D0090DE69 /* ColorChangingButton.swift in Sources */,
 				D83BF412247251D4002F0C0C /* DebugViewController.swift in Sources */,
 				D886E9C62458D4DB005F2571 /* ViewController.swift in Sources */,
+				D8DE8832247733C400F53A32 /* Sequence+RPUtilities.swift in Sources */,
 				D8515E7924650E1B007ACD50 /* ProjectListCell.swift in Sources */,
 				D858AFF4246A5EAB00F7EC48 /* RunningTimerCell.swift in Sources */,
 				D862D9182464F03D0031E3AB /* TimeRecord.swift in Sources */,
@@ -389,13 +410,16 @@
 				D8617740246BC90200A4C9D4 /* RunningTimer.swift in Sources */,
 				D862D9152464EB100031E3AB /* Project.swift in Sources */,
 				D884EE5624720D1200A77599 /* RunningTimerViewModel.swift in Sources */,
+				D8DE8838247733C400F53A32 /* Int+RPUtilities.swift in Sources */,
 				D861773D246A933100A4C9D4 /* TimeRecordInfo.swift in Sources */,
 				D886E9C22458D4DB005F2571 /* AppDelegate.swift in Sources */,
 				D884EE522470B40200A77599 /* TitleSupplementaryView.swift in Sources */,
 				D862D9132463AE740031E3AB /* AppDatabase.swift in Sources */,
+				D8DE883D247736F900F53A32 /* AppearanceManager.swift in Sources */,
 				D886E9C42458D4DB005F2571 /* SceneDelegate.swift in Sources */,
 				D8515E81246A4A80007ACD50 /* TimeRecordController.swift in Sources */,
 				D8617742246BCB0B00A4C9D4 /* RunningTimerInfo.swift in Sources */,
+				D8DE8835247733C400F53A32 /* TimeInterval+RPUtilities.swift in Sources */,
 				D8617747246E2FFB00A4C9D4 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,7 +428,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8DE8839247733C400F53A32 /* Int+RPUtilities.swift in Sources */,
 				D886E9D92458D4E0005F2571 /* TimeTractorTests.swift in Sources */,
+				D8DE8836247733C400F53A32 /* TimeInterval+RPUtilities.swift in Sources */,
+				D8DE8833247733C400F53A32 /* Sequence+RPUtilities.swift in Sources */,
+				D8DE883E247736F900F53A32 /* AppearanceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +440,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8DE883A247733C400F53A32 /* Int+RPUtilities.swift in Sources */,
 				D886E9E42458D4E0005F2571 /* TimeTractorUITests.swift in Sources */,
+				D8DE8837247733C400F53A32 /* TimeInterval+RPUtilities.swift in Sources */,
+				D8DE8834247733C400F53A32 /* Sequence+RPUtilities.swift in Sources */,
+				D8DE883F247736F900F53A32 /* AppearanceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

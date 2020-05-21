@@ -12,51 +12,6 @@ import GRDB
 import GRDBCombine
 
 class TimeRecordController {
-  //  func getTimeRecordPublisher(for id: UUID) -> AnyPublisher<Int, Error> {
-  //    let timeRecordObservation = ValueObservation.tracking { db in
-  //      return try! TimeRecord.filter(Column("projectId") == id).fetchCount(db)
-  //    }
-  //
-  //    return timeRecordObservation.publisher(in: dbQueue).eraseToAnyPublisher()
-  //  }
-  //
-  //  func getAllProjectsPublisher() -> AnyPublisher<[Project], Error> {
-  //    let observation = ValueObservation.tracking(value: Project.fetchAll)
-  //    return observation.publisher(in: dbQueue).eraseToAnyPublisher()
-  //  }
-  //
-  //  func getProjectInfoPublisher(for id: UUID) -> AnyPublisher<String, Error> {
-  //    let timeRecordObservation = ValueObservation.tracking { db in
-  //      return try! TimeRecord.filter(Column("projectId") == id).fetchCount(db)
-  //    }
-  //
-  //    return timeRecordObservation.publisher(in: dbQueue)
-  //      .map { String($0) }
-  //      .eraseToAnyPublisher()
-  //  }
-
-  //  func getProjectViewModels(date: Date) -> AnyPublisher<[ProjectViewModel], Error> {
-  //    let lastWeek = date.addingTimeInterval(-3600 * 24 * 7)
-  //    let observation = ValueObservation.tracking { db -> [ProjectViewModel] in
-  //      let projects = try Project.fetchAll(db)
-  //      return try projects.map { project in
-  //        let lastWeekTime = try Int.fetchOne(db, sql: """
-  //            SELECT sum(strftime('%s', endTime) - strftime('%s', startTime))
-  //            FROM timeRecord
-  //            WHERE (projectId = ?) and (strftime('%s', endTime) > strftime('%s', ?))
-  //          """,
-  //
-  //          arguments: [project.id, lastWeek])
-  //        var statusMessage = ""
-  //        if let lastWeekTime = lastWeekTime {
-  //            statusMessage = "\(lastWeekTime) sec\nlast week"
-  //        }
-  //        return ProjectViewModel(project: project, statusMessage: statusMessage)
-  //      }
-  //    }
-  //    return observation.publisher(in: dbQueue).eraseToAnyPublisher()
-  //  }
-
   /// Since one action may update multiple things at once, we don't want multiple redundant updates flying to the data source
   func getDataPublisher(date: Date) -> AnyPublisher<
     (RunningTimerViewModel?, [ProjectViewModel]), Error
@@ -85,7 +40,7 @@ class TimeRecordController {
           arguments: [project.id, lastWeek])
         var statusMessage = ""
         if let lastWeekTime = lastWeekTime {
-          statusMessage = "\(lastWeekTime) sec\nlast week"
+          statusMessage = "\(lastWeekTime.asFormattedTime) \nlast week"
         }
         return ProjectViewModel(project: project, statusMessage: statusMessage)
       }
@@ -95,20 +50,6 @@ class TimeRecordController {
     return observation.publisher(in: dbQueue).eraseToAnyPublisher()
 
   }
-  //
-  //  func getRunningTimerPublisher() -> AnyPublisher<RunningTimerViewModel?, Error> {
-  //    let currentlyRunningObservation = ValueObservation.tracking { db -> RunningTimerViewModel? in
-  //      let request = RunningTimer.filter(Column("isActive") == true).including(
-  //        required: RunningTimer.project)
-  //      if let runningTimerInfo = try RunningTimerInfo.fetchOne(db, request) {
-  //        return RunningTimerViewModel(runningTimerInfo: runningTimerInfo)
-  //      } else {
-  //        return nil
-  //      }
-  //    }
-  //    return currentlyRunningObservation.publisher(in: dbQueue)
-  //      .eraseToAnyPublisher()
-  //  }
 
   func complete(runningTimerId: UUID, at date: Date) {
     try! dbQueue.write { db in

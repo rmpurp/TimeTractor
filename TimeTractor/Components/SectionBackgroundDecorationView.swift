@@ -20,6 +20,7 @@ class SectionBackgroundDecorationView: UICollectionReusableView {
   }
 }
 
+// MARK: - Button Targets
 extension SectionBackgroundDecorationView {
   @objc func buttonTouchUpInside(sender: UIButton) {
     buttonTouchUp(sender: sender)
@@ -38,18 +39,21 @@ extension SectionBackgroundDecorationView {
         by: 0.2, isDarkMode: self.traitCollection.userInterfaceStyle == .dark)
     }
   }
+}
 
+// MARK: - Configuration
+extension SectionBackgroundDecorationView {
   func configure() {
-    backgroundColor = .secondarySystemGroupedBackground
-    layer.borderColor = UIColor.black.cgColor
-    layer.cornerRadius = 12
+    AppearanceManager.Card.apply(on: self)
 
     addSubview(button)
+
     button.translatesAutoresizingMaskIntoConstraints = false
     button.addTarget(self, action: #selector(buttonTouchUpInside(sender:)), for: .touchUpInside)
     button.addTarget(self, action: #selector(buttonTouchDown(sender:)), for: .touchDown)
     button.addTarget(self, action: #selector(buttonTouchUp(sender:)), for: .touchUpOutside)
     button.addTarget(self, action: #selector(buttonTouchUp(sender:)), for: .touchCancel)
+
     NSLayoutConstraint.activate([
       button.topAnchor.constraint(equalTo: topAnchor),
       button.bottomAnchor.constraint(equalTo: bottomAnchor),
