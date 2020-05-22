@@ -29,5 +29,4 @@ extension Project {
   var timeRecords: QueryInterfaceRequest<TimeRecord> {
     request(for: Project.timeRecords)
   }
-
 }

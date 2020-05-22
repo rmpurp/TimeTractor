@@ -25,6 +25,8 @@ class ProjectListCell: UICollectionViewCell {
   let subtitleLabel = UILabel()
 
   let button = UIButton(type: .system)
+  let invisibleSelectionButton = UIButton()
+
   let separatorView = UIView()
   let accessoryImageView = UIImageView()
 
@@ -33,6 +35,7 @@ class ProjectListCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     configure()
+    configureInvisibleSelectionButton()
   }
 
   required init?(coder: NSCoder) {
@@ -41,6 +44,49 @@ class ProjectListCell: UICollectionViewCell {
 }
 
 extension ProjectListCell {
+  @objc func invisibleSelectionButtonTouchUpInside(_ sender: Any) {
+    invisibleSelectionButtonTouchCancelled(sender)
+  }
+
+  @objc func invisibleSelectionButtonTouchCancelled(_ sender: Any) {
+    UIView.animate(withDuration: 0.1) {
+      Appearance.CardCell.applyUnpressed(on: self.contentView)
+    }
+  }
+
+  @objc func invisibleSelectionButtonTouchDown(_ sender: Any) {
+    UIView.animate(withDuration: 0.1) {
+      Appearance.CardCell.applyPressed(
+        on: self.contentView, darkMode: self.traitCollection.userInterfaceStyle == .dark)
+    }
+  }
+
+}
+
+extension ProjectListCell {
+  func configureInvisibleSelectionButton() {
+    addSubview(invisibleSelectionButton)
+    bringSubviewToFront(invisibleSelectionButton)
+    invisibleSelectionButton.translatesAutoresizingMaskIntoConstraints = false
+    invisibleSelectionButton.addTarget(
+      self, action: #selector(invisibleSelectionButtonTouchUpInside(_:)), for: .touchUpInside)
+
+    invisibleSelectionButton.addTarget(
+      self, action: #selector(invisibleSelectionButtonTouchCancelled(_:)),
+      for: [.touchUpOutside, .touchDragOutside, .touchCancel])
+
+    invisibleSelectionButton.addTarget(
+      self, action: #selector(invisibleSelectionButtonTouchDown(_:)),
+      for: [.touchDown, .touchDragEnter])
+
+    NSLayoutConstraint.activate([
+      invisibleSelectionButton.leadingAnchor.constraint(equalTo: label.leadingAnchor),
+      invisibleSelectionButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      invisibleSelectionButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+      invisibleSelectionButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+    ])
+  }
+
   func configure() {
     let inset: CGFloat = 15
 

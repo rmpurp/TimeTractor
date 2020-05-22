@@ -8,50 +8,59 @@
 import UIKit
 
 class TitleSupplementaryView: UICollectionReusableView {
-  let label = UILabel()
   static let reuseIdentifier = "title-supplementary-reuse-identifier"
-  let accessoryImageView = UIImageView()
+
+  let label = UILabel()
+  let accessory = UIImageView()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    configure()
+
+    isUserInteractionEnabled = false
+    configureLabel()
+    configureAccessoryImageView()
   }
+
   required init?(coder: NSCoder) {
     fatalError()
   }
 }
 
+// MARK: - Configuration
 extension TitleSupplementaryView {
-  func configure() {
-    isUserInteractionEnabled = false
+  func configureLabel() {
     addSubview(label)
-
     label.translatesAutoresizingMaskIntoConstraints = false
     label.adjustsFontForContentSizeCategory = true
     label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
 
+    NSLayoutConstraint.activate([
+      label.leadingAnchor.constraint(
+        equalTo: leadingAnchor, constant: Appearance.CardTitle.leadingInset),
+      label.trailingAnchor.constraint(
+        equalTo: trailingAnchor, constant: Appearance.CardTitle.trailingInset),
+      label.topAnchor.constraint(equalTo: topAnchor, constant: Appearance.CardTitle.topInset),
+      label.bottomAnchor.constraint(
+        equalTo: bottomAnchor, constant: Appearance.CardTitle.bottomInset),
+    ])
+  }
+
+  func configureAccessoryImageView() {
     let rtl = effectiveUserInterfaceLayoutDirection == .rightToLeft
     let chevronImageName = rtl ? "chevron.left" : "chevron.right"
     let chevronImage = UIImage(systemName: chevronImageName)
 
-    accessoryImageView.translatesAutoresizingMaskIntoConstraints = false
-    accessoryImageView.image = chevronImage
-    accessoryImageView.tintColor = UIColor.lightGray.withAlphaComponent(0.7)
-    addSubview(accessoryImageView)
-
-    let inset = CGFloat(15)
-    let bottomInset = CGFloat(5)
+    accessory.translatesAutoresizingMaskIntoConstraints = false
+    accessory.image = chevronImage
+    accessory.tintColor = Appearance.Cheveron.tintColor
+    addSubview(accessory)
 
     NSLayoutConstraint.activate([
-      label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-      label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-      label.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-      label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -bottomInset),
-
-      accessoryImageView.centerYAnchor.constraint(equalTo: label.centerYAnchor),
-      accessoryImageView.widthAnchor.constraint(equalToConstant: 13),
-      accessoryImageView.heightAnchor.constraint(equalToConstant: 20),
-      accessoryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
+      accessory.centerYAnchor.constraint(equalTo: label.centerYAnchor),
+      accessory.widthAnchor.constraint(equalToConstant: Appearance.Cheveron.width),
+      accessory.heightAnchor.constraint(equalToConstant: Appearance.Cheveron.height),
+      accessory.trailingAnchor.constraint(
+        equalTo: trailingAnchor, constant: Appearance.CardTitle.trailingInset),
     ])
   }
 }

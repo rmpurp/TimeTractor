@@ -41,7 +41,6 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
     self.title = "Time Tractor"
     self.navigationController?.navigationBar.prefersLargeTitles = true
     configureHierarchy()
@@ -72,19 +71,6 @@ class ViewController: UIViewController {
       try! project.insert(db)
     }
   }
-
-  //  func configureBottomBar() {
-  //    bottomBar = UIView()
-  //    bottomBar.translatesAutoresizingMaskIntoConstraints = false
-  //    view.addSubview(bottomBar)
-  //    bottomBar.backgroundColor = UIColor(displayP3Red: 0, green: 1, blue: 0, alpha: 0.5)
-  //    NSLayoutConstraint.activate([
-  //      bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-  //      bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-  //      bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-  //      bottomBar.heightAnchor.constraint(equalToConstant: 100),
-  //    ])
-  //  }
 }
 
 // MARK: - Collection View Layout
@@ -137,7 +123,8 @@ extension ViewController {
     collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    collectionView.contentInset = .zero
+
     view.addSubview(collectionView)
     collectionView.backgroundColor = .systemGroupedBackground
 
@@ -228,8 +215,8 @@ extension ViewController {
       switch self.dataSource.itemIdentifier(for: indexPath) {
       case .project:
         title = "Projects"
-      case .runningTimer:
-        title = "Running Timer"
+      case .runningTimer(let runningTimer):
+        title = runningTimer.projectName
       case nil:
         break
       }
@@ -244,26 +231,40 @@ extension ViewController {
       return supplementaryView
     }
 
-    //    setUpCurrentlyRunningSubscription()
-    //    setUpProjectsSubscription()
     setUpSubscription()
   }
 
 }
 
+// MARK: - Update timer display
 extension ViewController {
-  private func getFormattedText(for runningTimerInfo: RunningTimerInfo, at date: Date) -> String {
-    let elapsedTime = date.timeIntervalSince(runningTimerInfo.runningTimer.startTime)
-    return "\(runningTimerInfo.project.name) \(Int(elapsedTime)) seconds"
-  }
-
   @objc func tick() {
     guard let currentTimeRecord = self.currentTimeRecord else { return }
     guard let indexPath = self.dataSource.indexPath(for: Item.runningTimer(currentTimeRecord))
     else { return }
     guard let cell = self.collectionView.cellForItem(at: indexPath) else { return }
+    guard let timerCell = (cell as? RunningTimerCell) else { fatalError() }
 
-    (cell as! RunningTimerCell).label.text = currentTimeRecord.timeDisplay(at: Date())
+    timerCell.label.text = currentTimeRecord.timeDisplay(at: Date())
+    timerCell.cancelButtonCallback = { (_) in
+      let alert = UIAlertController(
+        title: "Are you sure you want to cancel this timer?", message: nil,
+        preferredStyle: .actionSheet)
+      alert.addAction(
+        UIAlertAction(
+          title: "Yes", style: .destructive,
+          handler: { _ in
+            self.timeRecordController.cancel(runningTimerId: currentTimeRecord.id)
+          }))
+      alert.addAction(
+        UIAlertAction(
+          title: "No", style: .default,
+          handler: { _ in
+            NSLog("The \"OK\" alert occured.")
+          }))
+
+      self.present(alert, animated: true, completion: nil)
+    }
 
   }
 }

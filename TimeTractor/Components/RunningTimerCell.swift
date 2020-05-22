@@ -15,6 +15,8 @@ import UIKit
 
 class RunningTimerCell: UICollectionViewCell {
   weak var delegate: RunningTimerCellDelegate?
+  var cancelButtonCallback: ((RunningTimerCell) -> Void)?
+
   var subscriptions = Set<AnyCancellable>()
 
   @objc func buttonPressed(sender: UIButton) {
@@ -23,6 +25,8 @@ class RunningTimerCell: UICollectionViewCell {
 
   let label = UILabel()
   let button = UIButton(type: .system)
+  let cancelButton = UIButton(type: .system)
+
   static let reuseIdentifier = "currently-running-time-record-cell-reuse-identifier"
 
   override init(frame: CGRect) {
@@ -32,6 +36,12 @@ class RunningTimerCell: UICollectionViewCell {
 
   required init?(coder: NSCoder) {
     fatalError()
+  }
+}
+
+extension RunningTimerCell {
+  @objc func cancelButtonPressed(_ sender: Any) {
+    cancelButtonCallback?(self)
   }
 }
 
@@ -52,16 +62,24 @@ extension RunningTimerCell {
     button.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
 
+    contentView.addSubview(cancelButton)
+    cancelButton.setTitle("Cancel", for: .normal)
+    cancelButton.setTitleColor(.systemRed, for: .normal)
+    cancelButton.translatesAutoresizingMaskIntoConstraints = false
+    cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
+
     contentView.addSubview(button)
 
     NSLayoutConstraint.activate([
       label.leadingAnchor.constraint(equalTo: button.trailingAnchor),
-      label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+      label.trailingAnchor.constraint(equalTo: cancelButton.leadingAnchor, constant: -5),
       label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
       label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
       button.topAnchor.constraint(equalTo: contentView.topAnchor),
       button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
       button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+      cancelButton.centerYAnchor.constraint(equalTo: label.centerYAnchor),
+      cancelButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
     ])
   }
 

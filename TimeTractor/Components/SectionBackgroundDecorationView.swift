@@ -24,27 +24,26 @@ class SectionBackgroundDecorationView: UICollectionReusableView {
 extension SectionBackgroundDecorationView {
   @objc func buttonTouchUpInside(sender: UIButton) {
     buttonTouchUp(sender: sender)
-
   }
 
   @objc func buttonTouchUp(sender: UIButton) {
     UIView.animate(withDuration: 0.1) {
-      self.backgroundColor = .secondarySystemGroupedBackground
+      Appearance.Card.applyUnpressed(on: self)
     }
   }
 
   @objc func buttonTouchDown(sender: UIButton) {
     UIView.animate(withDuration: 0.1) {
-      self.backgroundColor = UIColor.secondarySystemGroupedBackground.modify(
-        by: 0.2, isDarkMode: self.traitCollection.userInterfaceStyle == .dark)
+
+      Appearance.Card.applyPressed(
+        on: self, darkMode: self.traitCollection.userInterfaceStyle == .dark)
     }
   }
 }
-
 // MARK: - Configuration
 extension SectionBackgroundDecorationView {
   func configure() {
-    AppearanceManager.Card.apply(on: self)
+    Appearance.Card.apply(on: self)
 
     addSubview(button)
 
