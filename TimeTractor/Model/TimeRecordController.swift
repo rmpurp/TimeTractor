@@ -26,39 +26,18 @@ class TimeRecordController {
         timerViewModel = RunningTimerViewModel(runningTimerInfo: runningTimerInfo)
       }
 
-      let yesterday = date.addingTimeInterval(-3600 * 24)
       let lastWeek = date.addingTimeInterval(-3600 * 24 * 7)
 
       let projects = try Project.fetchAll(db)
       let projectViewModels = try projects.map { project -> ProjectViewModel in
-        var statusMessage = ""
+        
+        let recentTimeRecords = try TimeRecord.fetchAll(db, sql: """
+          SELECT *
+          FROM timeRecord
+          WHERE (projectId = ?) AND (strftime('%s', endTime) > strftime('%s', ?))
+        """, arguments: [project.id, lastWeek])
 
-        let yesterdayTime = try Int.fetchOne(
-          db,
-          sql: """
-              SELECT sum(strftime('%s', endTime) - strftime('%s', startTime))
-              FROM timeRecord
-              WHERE (projectId = ?) and (strftime('%s', endTime) > strftime('%s', ?))
-            """,
-          arguments: [project.id, yesterday])
-
-        if let yesterdayTime = yesterdayTime, yesterdayTime > 0 {
-          statusMessage = "\(yesterdayTime.asFormattedTime) \ntoday"
-        } else {
-          let lastWeekTime = try Int.fetchOne(
-            db,
-            sql: """
-                SELECT sum(strftime('%s', endTime) - strftime('%s', startTime))
-                FROM timeRecord
-                WHERE (projectId = ?) and (strftime('%s', endTime) > strftime('%s', ?))
-              """,
-            arguments: [project.id, lastWeek])
-          if let lastWeekTime = lastWeekTime, lastWeekTime > 0 {
-            statusMessage = "\(lastWeekTime.asFormattedTime) \nthis week"
-          }
-        }
-
-        return ProjectViewModel(project: project, statusMessage: statusMessage)
+        return ProjectViewModel(project: project, referenceDate: date, recentTimeRecords: recentTimeRecords)
       }
       return (timerViewModel, projectViewModels)
     }
@@ -75,6 +54,18 @@ class TimeRecordController {
         projectId: runningTimer.projectId)
       try runningTimer.delete(db)
       try timeRecord.insert(db)
+    }
+  }
+  
+  func update(projectViewModel: ProjectViewModel) {
+    try! dbQueue.write { db in
+      try projectViewModel.project.update(db)
+    }
+  }
+  
+  func delete(projectViewModel: ProjectViewModel) {
+    _ = try! dbQueue.write { db in
+      try projectViewModel.project.delete(db)
     }
   }
 

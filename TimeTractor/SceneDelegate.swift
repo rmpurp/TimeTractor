@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,25 +21,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
     // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     guard let windowScene = (scene as? UIWindowScene) else { return }
-    let window = UIWindow(windowScene: windowScene)
 
-    //    #if targetEnvironment(macCatalyst)
-    //      if let titlebar = windowScene.titlebar {
-    //        let toolbar = NSToolbar(identifier: "TEST")
-    //        titlebar.titleVisibility = .hidden
-    //        titlebar.toolbar = toolbar
-    //      }
-    //      //    window.rootViewController = ViewController()
-    //      self.window = window
-    //    #else
-    //      //    window.rootViewController = UINavigationController(rootViewController: ViewController())
-    //    #endif
+    let window = UIWindow(windowScene: windowScene)
+//    let contentView = WideContentView()
+//      .environmentObject(TimeTractorViewModel() as TimeTractorViewModel)
+//    window.rootViewController = UIHostingController(rootView: contentView)
+    
     let navController = UINavigationController(rootViewController: ViewController())
     let debugController = DebugViewController()
     debugController.setRootController(navController)
     window.rootViewController = debugController
 
-    //    window.rootViewController = navController
     self.window = window
     window.makeKeyAndVisible()
 

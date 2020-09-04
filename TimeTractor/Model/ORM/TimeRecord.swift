@@ -13,7 +13,7 @@ struct TimeRecord {
   var id: UUID = UUID()
   var taskName: String?
   var startTime: Date
-  var endTime: Date?
+  var endTime: Date
   var projectId: UUID
 }
 

@@ -12,6 +12,9 @@
 		D8515E7D246523CB007ACD50 /* GRDBCombine in Frameworks */ = {isa = PBXBuildFile; productRef = D8515E7C246523CB007ACD50 /* GRDBCombine */; };
 		D8515E81246A4A80007ACD50 /* TimeRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8515E80246A4A80007ACD50 /* TimeRecordController.swift */; };
 		D858AFF4246A5EAB00F7EC48 /* RunningTimerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D858AFF3246A5EAB00F7EC48 /* RunningTimerCell.swift */; };
+		D8601A42247B1EA4005C97B9 /* EditProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8601A41247B1EA4005C97B9 /* EditProjectView.swift */; };
+		D8601A80247E47F8005C97B9 /* TimeTractorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8601A7F247E47F8005C97B9 /* TimeTractorViewModel.swift */; };
+		D8601A83247E4CE7005C97B9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8601A82247E4CE7005C97B9 /* ContentView.swift */; };
 		D861773D246A933100A4C9D4 /* TimeRecordInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861773C246A933100A4C9D4 /* TimeRecordInfo.swift */; };
 		D8617740246BC90200A4C9D4 /* RunningTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861773F246BC90200A4C9D4 /* RunningTimer.swift */; };
 		D8617742246BCB0B00A4C9D4 /* RunningTimerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8617741246BCB0B00A4C9D4 /* RunningTimerInfo.swift */; };
@@ -21,6 +24,7 @@
 		D862D9132463AE740031E3AB /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9122463AE740031E3AB /* AppDatabase.swift */; };
 		D862D9152464EB100031E3AB /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9142464EB100031E3AB /* Project.swift */; };
 		D862D9182464F03D0031E3AB /* TimeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D862D9172464F03D0031E3AB /* TimeRecord.swift */; };
+		D86B72CC2483B92200B03CB9 /* WideContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86B72CB2483B92200B03CB9 /* WideContentView.swift */; };
 		D884EE522470B40200A77599 /* TitleSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D884EE512470B40200A77599 /* TitleSupplementaryView.swift */; };
 		D884EE542471F0E700A77599 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D884EE532471F0E700A77599 /* ProjectViewModel.swift */; };
 		D884EE5624720D1200A77599 /* RunningTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D884EE5524720D1200A77599 /* RunningTimerViewModel.swift */; };
@@ -43,6 +47,7 @@
 		D8DE883D247736F900F53A32 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE883C247736F900F53A32 /* Appearance.swift */; };
 		D8DE883E247736F900F53A32 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE883C247736F900F53A32 /* Appearance.swift */; };
 		D8DE883F247736F900F53A32 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8DE883C247736F900F53A32 /* Appearance.swift */; };
+		D8F382D2247A5C3E003D69D2 /* CreateProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F382D1247A5C3E003D69D2 /* CreateProjectView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +72,9 @@
 		D8515E7824650E1B007ACD50 /* ProjectListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListCell.swift; sourceTree = "<group>"; };
 		D8515E80246A4A80007ACD50 /* TimeRecordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecordController.swift; sourceTree = "<group>"; };
 		D858AFF3246A5EAB00F7EC48 /* RunningTimerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimerCell.swift; sourceTree = "<group>"; };
+		D8601A41247B1EA4005C97B9 /* EditProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProjectView.swift; sourceTree = "<group>"; };
+		D8601A7F247E47F8005C97B9 /* TimeTractorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeTractorViewModel.swift; path = ../TimeTractorViewModel.swift; sourceTree = "<group>"; };
+		D8601A82247E4CE7005C97B9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D861773C246A933100A4C9D4 /* TimeRecordInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecordInfo.swift; sourceTree = "<group>"; };
 		D861773F246BC90200A4C9D4 /* RunningTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimer.swift; sourceTree = "<group>"; };
 		D8617741246BCB0B00A4C9D4 /* RunningTimerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimerInfo.swift; sourceTree = "<group>"; };
@@ -76,6 +84,7 @@
 		D862D9122463AE740031E3AB /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
 		D862D9142464EB100031E3AB /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		D862D9172464F03D0031E3AB /* TimeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRecord.swift; sourceTree = "<group>"; };
+		D86B72CB2483B92200B03CB9 /* WideContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideContentView.swift; sourceTree = "<group>"; };
 		D884EE512470B40200A77599 /* TitleSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplementaryView.swift; sourceTree = "<group>"; };
 		D884EE532471F0E700A77599 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 		D884EE5524720D1200A77599 /* RunningTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTimerViewModel.swift; sourceTree = "<group>"; };
@@ -96,6 +105,7 @@
 		D8DE8830247733C400F53A32 /* TimeInterval+RPUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+RPUtilities.swift"; sourceTree = "<group>"; };
 		D8DE8831247733C400F53A32 /* Int+RPUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+RPUtilities.swift"; sourceTree = "<group>"; };
 		D8DE883C247736F900F53A32 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		D8F382D1247A5C3E003D69D2 /* CreateProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +135,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D8601A81247E481F005C97B9 /* ORM */ = {
+			isa = PBXGroup;
+			children = (
+				D862D9142464EB100031E3AB /* Project.swift */,
+				D861773F246BC90200A4C9D4 /* RunningTimer.swift */,
+				D862D9172464F03D0031E3AB /* TimeRecord.swift */,
+			);
+			path = ORM;
+			sourceTree = "<group>";
+		};
 		D861773E246BC8E800A4C9D4 /* CompositeModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,13 +157,11 @@
 		D862D9162464F0320031E3AB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D8601A81247E481F005C97B9 /* ORM */,
 				D884EE57247211BE00A77599 /* ViewModels */,
 				D861773E246BC8E800A4C9D4 /* CompositeModels */,
 				D8515E80246A4A80007ACD50 /* TimeRecordController.swift */,
 				D862D9122463AE740031E3AB /* AppDatabase.swift */,
-				D862D9142464EB100031E3AB /* Project.swift */,
-				D861773F246BC90200A4C9D4 /* RunningTimer.swift */,
-				D862D9172464F03D0031E3AB /* TimeRecord.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -153,6 +171,7 @@
 			children = (
 				D884EE532471F0E700A77599 /* ProjectViewModel.swift */,
 				D884EE5524720D1200A77599 /* RunningTimerViewModel.swift */,
+				D8601A7F247E47F8005C97B9 /* TimeTractorViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -186,6 +205,8 @@
 				D862D9162464F0320031E3AB /* Model */,
 				D886E9C12458D4DB005F2571 /* AppDelegate.swift */,
 				D886E9C32458D4DB005F2571 /* SceneDelegate.swift */,
+				D8601A82247E4CE7005C97B9 /* ContentView.swift */,
+				D86B72CB2483B92200B03CB9 /* WideContentView.swift */,
 				D886E9C52458D4DB005F2571 /* ViewController.swift */,
 				D886E9CA2458D4E0005F2571 /* Assets.xcassets */,
 				D886E9CC2458D4E0005F2571 /* LaunchScreen.storyboard */,
@@ -222,6 +243,8 @@
 				D884EE512470B40200A77599 /* TitleSupplementaryView.swift */,
 				D83BF411247251D4002F0C0C /* DebugViewController.swift */,
 				D8DE883C247736F900F53A32 /* Appearance.swift */,
+				D8F382D1247A5C3E003D69D2 /* CreateProjectView.swift */,
+				D8601A41247B1EA4005C97B9 /* EditProjectView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -373,7 +396,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		D84E9F5B2474A61D00C1C76D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -384,7 +407,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "if which swift-format >/dev/null; then\n    swift-format -m format -i -r ${PROJECT_DIR}\nelse\n    echo \"warning: swift-format not installed\"\nfi\n";
 		};
@@ -395,15 +418,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8F382D2247A5C3E003D69D2 /* CreateProjectView.swift in Sources */,
 				D83BF412247251D4002F0C0C /* DebugViewController.swift in Sources */,
 				D886E9C62458D4DB005F2571 /* ViewController.swift in Sources */,
 				D8DE8832247733C400F53A32 /* Sequence+RPUtilities.swift in Sources */,
+				D8601A80247E47F8005C97B9 /* TimeTractorViewModel.swift in Sources */,
 				D8515E7924650E1B007ACD50 /* ProjectListCell.swift in Sources */,
 				D858AFF4246A5EAB00F7EC48 /* RunningTimerCell.swift in Sources */,
 				D862D9182464F03D0031E3AB /* TimeRecord.swift in Sources */,
 				D884EE542471F0E700A77599 /* ProjectViewModel.swift in Sources */,
+				D8601A42247B1EA4005C97B9 /* EditProjectView.swift in Sources */,
+				D8601A83247E4CE7005C97B9 /* ContentView.swift in Sources */,
 				D8617745246E186F00A4C9D4 /* SectionBackgroundDecorationView.swift in Sources */,
 				D8617740246BC90200A4C9D4 /* RunningTimer.swift in Sources */,
+				D86B72CC2483B92200B03CB9 /* WideContentView.swift in Sources */,
 				D862D9152464EB100031E3AB /* Project.swift in Sources */,
 				D884EE5624720D1200A77599 /* RunningTimerViewModel.swift in Sources */,
 				D8DE8838247733C400F53A32 /* Int+RPUtilities.swift in Sources */,

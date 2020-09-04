@@ -16,26 +16,31 @@ import UIKit
 class ProjectListCell: UICollectionViewCell {
   weak var delegate: ProjectListCellDelegate?
   var subscriptions = Set<AnyCancellable>()
+  
+  var accessoryButtonPressed: (() -> Void)?
 
-  @objc func buttonPressed(sender: UIButton) {
-    delegate?.buttonWasPressed(in: self)
+  @objc func buttonPressed(_ sender: Any) {
+//    delegate?.buttonWasPressed(in: self)
+    accessoryButtonPressed?()
   }
 
   let label = UILabel()
   let subtitleLabel = UILabel()
 
-  let button = UIButton(type: .system)
+  let accessoryButton = UIButton(type: .system)
   let invisibleSelectionButton = UIButton()
 
   let separatorView = UIView()
-  let accessoryImageView = UIImageView()
+  let leadingView = UIView()
 
   static let reuseIdentifier = "project-list-cell-reuse-identifier"
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    configureAccessoryButton()
     configure()
     configureInvisibleSelectionButton()
+    contentView.bringSubviewToFront(accessoryButton)
   }
 
   required init?(coder: NSCoder) {
@@ -46,6 +51,7 @@ class ProjectListCell: UICollectionViewCell {
 extension ProjectListCell {
   @objc func invisibleSelectionButtonTouchUpInside(_ sender: Any) {
     invisibleSelectionButtonTouchCancelled(sender)
+    delegate?.buttonWasPressed(in: self)
   }
 
   @objc func invisibleSelectionButtonTouchCancelled(_ sender: Any) {
@@ -65,8 +71,7 @@ extension ProjectListCell {
 
 extension ProjectListCell {
   func configureInvisibleSelectionButton() {
-    addSubview(invisibleSelectionButton)
-    bringSubviewToFront(invisibleSelectionButton)
+    contentView.addSubview(invisibleSelectionButton)
     invisibleSelectionButton.translatesAutoresizingMaskIntoConstraints = false
     invisibleSelectionButton.addTarget(
       self, action: #selector(invisibleSelectionButtonTouchUpInside(_:)), for: .touchUpInside)
@@ -86,6 +91,26 @@ extension ProjectListCell {
       invisibleSelectionButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
     ])
   }
+  
+  func configureAccessoryButton() {
+    let inset: CGFloat = 15
+
+    let image = UIImage(
+      systemName: "ellipsis.circle.fill")
+    accessoryButton.setImage(image, for: .normal)
+    accessoryButton.translatesAutoresizingMaskIntoConstraints = false
+    accessoryButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+    accessoryButton.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    accessoryButton.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
+    contentView.addSubview(accessoryButton)
+    
+    NSLayoutConstraint.activate([
+      accessoryButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+      accessoryButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+      accessoryButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+])
+    
+  }
 
   func configure() {
     let inset: CGFloat = 15
@@ -103,55 +128,37 @@ extension ProjectListCell {
     subtitleLabel.numberOfLines = 2
     subtitleLabel.font = .monospacedDigitSystemFont(ofSize: 12, weight: .regular)
 
-    //    subtitleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
     contentView.addSubview(subtitleLabel)
-
-    //    button.setTitle("Start", for: .normal)
-    button.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    button.contentEdgeInsets = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-
-    button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchUpInside)
-    contentView.addSubview(button)
 
     separatorView.translatesAutoresizingMaskIntoConstraints = false
     separatorView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
     contentView.addSubview(separatorView)
 
-    let rtl = effectiveUserInterfaceLayoutDirection == .rightToLeft
-    let chevronImageName = rtl ? "chevron.left" : "chevron.right"
-    let chevronImage = UIImage(systemName: chevronImageName)
-
-    accessoryImageView.translatesAutoresizingMaskIntoConstraints = false
-    accessoryImageView.image = chevronImage
-    accessoryImageView.tintColor = UIColor.lightGray.withAlphaComponent(0.7)
-    accessoryImageView.isHidden = true
-    contentView.addSubview(accessoryImageView)
+    leadingView.translatesAutoresizingMaskIntoConstraints = false
+    leadingView.backgroundColor = .systemBlue
+    contentView.addSubview(leadingView)
 
     NSLayoutConstraint.activate([
-      label.leadingAnchor.constraint(equalTo: button.trailingAnchor),
+      label.leadingAnchor.constraint(equalTo: leadingView.trailingAnchor, constant: inset),
       label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
       label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
 
-      button.topAnchor.constraint(equalTo: contentView.topAnchor),
-      button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-      button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-
-      separatorView.leadingAnchor.constraint(equalTo: button.trailingAnchor, constant: 0),
+      separatorView.leadingAnchor.constraint(
+        equalTo: label.leadingAnchor, constant: inset),
       separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-      separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+      separatorView.trailingAnchor.constraint(
+        equalTo: accessoryButton.leadingAnchor, constant: 0),
       separatorView.heightAnchor.constraint(equalToConstant: 0.5),
 
+      leadingView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: inset / 2),
+      leadingView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset / 2),
+      leadingView.widthAnchor.constraint(equalToConstant: 2),
+      leadingView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
+
       subtitleLabel.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 10),
-      subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+      subtitleLabel.trailingAnchor.constraint(equalTo: accessoryButton.leadingAnchor),
       subtitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
       subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-
-      //      accessoryImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-      //      accessoryImageView.widthAnchor.constraint(equalToConstant: 13),
-      //      accessoryImageView.heightAnchor.constraint(equalToConstant: 20),
-      //      accessoryImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
     ])
   }
 
